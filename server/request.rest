@@ -1,0 +1,11 @@
+GET http://localhost:5000/api/users/
+
+###
+
+POST http://localhost:5000/api/registration
+content-type: application/json
+
+{
+    "email" : "test@example.com",
+    "password" : "12345678"
+}
