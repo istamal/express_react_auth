@@ -9,3 +9,5 @@ class UserDto {
         this.isActivated = model.isActivated;
     }
 }
+
+module.exports = UserDto;

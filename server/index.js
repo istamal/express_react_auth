@@ -19,6 +19,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/api', router);
 
+// Инициализируем асинк функцию потому что подключение к БД асинхронный процесс
 const start = async () => {
     try {
         await db.connect(DB_URL);

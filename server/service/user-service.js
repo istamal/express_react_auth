@@ -13,8 +13,8 @@ class UserService {
         if (candidate) {
             throw new Error('Пользователь с таким эмайл уже существует.');
         }
-        const hashedPassword = bcrypt.hash(password, 10);
-        const activationLink = uuid.v4();
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const activationLink = await uuid.v4();
         const user = await UserModel.create({ email, password: hashedPassword, activationLink });
         await mailService.sendActivationLink(email, activationLink);
         const userDto = new UserDto(user);
