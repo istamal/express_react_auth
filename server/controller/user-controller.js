@@ -5,7 +5,7 @@ class UserContorller {
         try {
             const { email, password } = req.body;
             const userdata = await userService.registration(email, password);
-            /** @maxAge - время жизни в милесекундах */
+            /** @maxAge - время жизни в милесекундах, здесь это 30 дней */
             /** @httpOnlu - Использовать только через http протокол */
             /**
              * Куки HTTPonly не доступны из JavaScript через свойства Document.cookie API,
@@ -14,7 +14,7 @@ class UserContorller {
              * В частности, если куки используются только для поддержки сеанса, то в JavaScript они не нужны
              * так что в этом случае следует устанавливать флаг HttpOnly
              */
-            res.cookie('refreshToken', userdata.refreshToken, { maxAge: 30 * 60 * 60 * 1000, httpOnly: true });
+            res.cookie('refreshToken', userdata.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
             return res.json(userdata);
         } catch (e) {
             console.log(e);
