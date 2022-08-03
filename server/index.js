@@ -2,15 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
 
 const db = require('./db');
 const router = require('./router/index');
 
 const PORT = process.env.PORT || 5000;
-const MONGO_HOSTNAME = process.env.MONGO_HOSTNAME;
-const MONGO_PORT = process.env.MONGO_PORT;
-const MONGO_DB = process.env.MONGO_DB;
-const DB_URL = `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}`
+const DB_URL = process.env.DB_URL;
 
 const app = express();
 
@@ -22,7 +20,10 @@ app.use('/api', router);
 // Инициализируем асинк функцию потому что подключение к БД асинхронный процесс
 const start = async () => {
     try {
-        await db.connect(DB_URL);
+        await mongoose.connect(DB_URL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
         app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
     } catch (e) {
         console.log(e);
